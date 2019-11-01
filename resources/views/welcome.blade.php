@@ -8,7 +8,7 @@
 
         <!-- Bulma e estilo.css -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
-        <link rel="stylesheet" href="../css/estilo.css">
+        <link rel="stylesheet" href="../../public/css/estilo.css">
 
         <!-- Importa Google Icon Font e materialize.css -->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -21,8 +21,41 @@
     <body>
         <div class="container">
             <div class="row">
+                <div class="col l12 m12 s12" id="teste">
+                    <h1 class="title is-3">Agenda</h1>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col l12 m12 s12">
-                    <h1>Testando</h1>
+                    <label for="nome">Nome:</label>
+                    <input type="text">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col l12 m12 s12">
+                    <label for="telefone">Telefone:</label>
+                    <input type="number">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col l12 m12 s12">
+                    <label for="e-mail">E-mail:</label>
+                    <input type="email">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col l12 m12 s12">
+                    <label for="e-mail">Circulo social:</label>
+                </div>
+                <div class="col l12 m12 s12">
+                    <div class="select">
+                        <select>
+                            <option>Profissional</option>
+                            <option>Acadêmico</option>
+                            <option>Pessoal</option>
+                            <option selected>Indefinido</option>
+                        </select>
+                    </div>
                 </div>
             </div>
         </div>
