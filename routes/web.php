@@ -15,6 +15,8 @@ Route::get('/', function () {
     return view('register');
 });
 
+Route::get('register', 'Controller@registerPerson');
+
 Route::get('/home', function () {
     return view('home');
 });
