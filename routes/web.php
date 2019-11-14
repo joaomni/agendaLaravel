@@ -20,3 +20,7 @@ Route::get('register', 'Controller@registerPerson');
 Route::get('/home', function () {
     return view('home');
 });
+
+Route::get('/change', function () {
+    return view('change');
+});

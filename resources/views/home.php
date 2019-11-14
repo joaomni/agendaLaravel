@@ -16,6 +16,14 @@
         }
 
     }
+
+    if(isset($_GET['edit'])){
+
+        $_SESSION['id'] = $_GET['edit'];
+
+        
+
+    }
 ?>
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
@@ -61,20 +69,6 @@
                     </form>
                 </div>
             </div>
-            <table class="centered highlight">
-                <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>Telefone</th>
-                        <th>E-mail</th>
-                        <th>Circulo Social</th>
-                        <th>Data de Cadastro</th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                </thead>
-
-                <tbody>
 
                 <?php
 
@@ -128,15 +122,133 @@
                 ?>
 
                     <form method="GET">
-                        <tr>
-                            <td> <?php echo substr($nome, 0, 7); ?> </td>
-                            <td> <?php echo $telefone; ?> </td>
-                            <td> <?php echo $email; ?> </td>
-                            <td> <?php echo $social; ?> </td>
-                            <td style="font-size: 10px;"> <?php echo $data; ?> </td>
-                            <td><button name="edit" type="submit"><i class="fas fa-edit"></i></button></td>
-                            <td><button name="delete" value="<?php echo $codigo; ?>" type="submit"><i class="fas fa-trash-alt"></i></button></td>
-                        </tr>
+                        <div class="field">
+                            <label class="label">Name</label>
+                            <div class="control">
+                                <input class="input" type="text" placeholder="Text input">
+                            </div>
+                            </div>
+
+                            <div class="field">
+                            <label class="label">Username</label>
+                            <div class="control has-icons-left has-icons-right">
+                                <input class="input is-success" type="text" placeholder="Text input" value="bulma">
+                                <span class="icon is-small is-left">
+                                <i class="fas fa-user"></i>
+                                </span>
+                                <span class="icon is-small is-right">
+                                <i class="fas fa-check"></i>
+                                </span>
+                            </div>
+                            <p class="help is-success">This username is available</p>
+                            </div>
+
+                            <div class="field">
+                            <label class="label">Email</label>
+                            <div class="control has-icons-left has-icons-right">
+                                <input class="input is-danger" type="email" placeholder="Email input" value="hello@">
+                                <span class="icon is-small is-left">
+                                <i class="fas fa-envelope"></i>
+                                </span>
+                                <span class="icon is-small is-right">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                </span>
+                            </div>
+                            <p class="help is-danger">This email is invalid</p>
+                            </div>
+
+                            <div class="field">
+                            <label class="label">Subject</label>
+                            <div class="control">
+                                <div class="select">
+                                <select>
+                                    <option>Select dropdown</option>
+                                    <option>With options</option>
+                                </select>
+                                </div>
+                            </div>
+                            </div>
+
+                            <div class="field">
+                            <label class="label">Message</label>
+                            <div class="control">
+                                <textarea class="textarea" placeholder="Textarea"></textarea>
+                            </div>
+                            </div>
+
+                            <div class="field">
+                            <div class="control">
+                                <label class="checkbox">
+                                <input type="checkbox">
+                                I agree to the <a href="#">terms and conditions</a>
+                                </label>
+                            </div>
+                            </div>
+
+                            <div class="field">
+                            <div class="control">
+                                <label class="radio">
+                                <input type="radio" name="question">
+                                Yes
+                                </label>
+                                <label class="radio">
+                                <input type="radio" name="question">
+                                No
+                                </label>
+                            </div>
+                            </div>
+
+                            <div class="field is-grouped">
+                            <div class="control">
+                                <button class="button is-link">Submit</button>
+                            </div>
+                            <div class="control">
+                                <button class="button is-link is-light">Cancel</button>
+                            </div>
+                            </div>
+                        <!-- <div class="row">
+                            <form class="col s12">
+                            <div class="row">
+                                <div class="input-field col s6">
+                                <input value="<?php echo $nome; ?>" placeholder="Placeholder" id="first_name" type="text" class="validate">
+                                <label for="first_name">Nome</label>
+                                </div>
+                                <div class="input-field col s6">
+                                    <select>
+                                        <option value="1">Option 1</option>
+                                        <option value="2">Option 2</option>
+                                        <option value="3">Option 3</option>
+                                    </select>
+                                    <label>Circulo Social</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                <input value="<?php echo $email; ?>" id="disabled" type="email" class="validate">
+                                <label for="disabled">E-mail</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                <input value="<?php echo $telefone; ?>" id="password" type="text" class="validate">
+                                <label for="password">Telefone</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                <input value="<?php echo $data; ?>" id="email" type="text" class="validate">
+                                <label for="email">Data</label>
+                                </div>
+                            </div>
+                            </form>
+                            <div class="row">
+                                <div class="col s6">
+                                    <button name="edit" value="<?php echo $codigo; ?>" class="button is-fullwidth is-success is-outlined" type="submit"><i class=" fas fa-edit"></i></button>
+                                </div>
+                                <div class="col s6">
+                                    <button name="delete" value="<?php echo $codigo; ?>" class="button is-fullwidth is-danger is-outlined" type="submit"><i class=" fas fa-trash-alt"></i></button>
+                                </div>
+                            </div> -->
                     </form>
 
                 <?php
