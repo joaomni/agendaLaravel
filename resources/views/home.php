@@ -5,7 +5,7 @@
 
         $id = $_GET['delete'];
 
-        $sql = "DELETE FROM tb_person WHERE cd_person = $id";
+        $sql = "DELETE FROM tb_person WHERE cd_person = ".$id;
 
         $query = $connect->query($sql);
 
@@ -19,10 +19,32 @@
 
     if(isset($_GET['edit'])){
 
-        $_SESSION['id'] = $_GET['edit'];
+        $id = $_GET['edit'];
+        $nome = $_GET['nome'];
+        $email = $_GET['email'];
+        $tel = $_GET['tel'];
+        $social = $_GET['social'];
 
-        
+        $sql = "UPDATE tb_person SET nm_person = '$nome', nr_phone = '$tel', ds_email = '$email', nm_circulo_social = '$social' WHERE cd_person = ".$id;
 
+        $query = $connect->query($sql);
+
+        if(!$query){
+           echo $connect->error;
+        }else{
+            echo "<script> location.href = 'http://127.0.0.1:8000/home' </script>";
+        }
+
+    }
+
+    function verificarSocial($recebido, $option){
+        $state = "";
+
+        if($recebido == $option){
+            $state = "selected";
+        }
+
+        return $state;
     }
 ?>
 <!DOCTYPE html>
@@ -45,6 +67,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         
         <style>
+            body{
+                background: #F1F1F1;
+            }
             button{
                 border: none;
                 background: none;
@@ -55,6 +80,19 @@
             }
             button:focus{
                 background: none;
+            }
+            hr{
+                border: 1px #A2A2A2 solid;
+                border-radius: 50px;
+                margin: 0;
+                margin-top: 10px;
+            }
+            #box{
+                border-radius: 10px;
+                background: #FFFFFF;
+                padding: 30px;
+                margin-top: 10px;
+                box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
             }
         </style>
 
@@ -79,6 +117,8 @@
                         $sql = "SELECT * FROM tb_person WHERE nm_person LIKE '$texto%' OR nm_circulo_social LIKE '$texto%'";
 
                         $query = $connect->query($sql);
+
+                        
     
                         while ($dados = $query->fetch_object()):
                             $codigo = $dados->cd_person;
@@ -89,18 +129,55 @@
                             $data = $dados->dt_register;
                     
                 ?>
-    
-                    <form method="GET">
-                        <tr>
-                            <td> <?php echo substr($nome, 0, 7); ?> </td>
-                            <td> <?php echo $telefone; ?> </td>
-                            <td> <?php echo $email; ?> </td>
-                            <td> <?php echo $social; ?> </td>
-                            <td style="font-size: 10px;"> <?php echo $data; ?> </td>
-                            <td><button name="edit" type="submit"><i class="fas fa-edit"></i></button></td>
-                            <td><button name="delete" value="<?php echo $codigo; ?>" type="submit"><i class="fas fa-trash-alt"></i></button></td>
-                        </tr>
+
+                    <form id="box" method="GET">
+                        <div class="field">
+                            <label class="label">Nome:</label>
+                            <div class="control">
+                                <input class="input" name="nome" type="text" placeholder="Nome.." value="<?php echo $nome; ?>">
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">E-mail:</label>
+                            <div class="control">
+                                <input class="input" name="email" type="email" placeholder="Email.." value="<?php echo $email; ?>">
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">Telefone:</label>
+                            <div class="control">
+                                <input class="input" type="tel" name="tel" placeholder="telefone" value="<?php echo $telefone; ?>">
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">Circulo Social</label>
+                            <div class="control">
+                                <div class="select">
+                                <select name="social">
+                                    <option <?php echo verificarSocial($social, 'Profissional'); ?>>Profissional</option>
+                                    <option <?php echo verificarSocial($social, 'Acadêmico'); ?>>Acadêmico</option>
+                                    <option <?php echo verificarSocial($social, 'Pessoal'); ?>>Pessoal</option>
+                                    <option <?php echo verificarSocial($social, 'Estudante'); ?>>Estudante</option>
+                                    <option <?php echo verificarSocial($social, 'Indefinido'); ?>>Indefinido</option>
+                                </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="field is-grouped">
+                            <div class="control">
+                                <button type="submit" value="<?php echo $codigo; ?>" name="edit" class="button is-success">Salvar</button>
+                            </div>
+                            <div class="control">
+                                <button type="submit" value="<?php echo $codigo; ?>" name="delete" class="button is-danger is-light">Excluir</button>
+                            </div>
+                        </div>
                     </form>
+
+                    <hr></hr>
     
                 <?php
                         endwhile;
@@ -121,143 +198,59 @@
                 
                 ?>
 
-                    <form method="GET">
+                    <form id="box" method="GET">
                         <div class="field">
-                            <label class="label">Name</label>
+                            <label class="label">Nome:</label>
                             <div class="control">
-                                <input class="input" type="text" placeholder="Text input">
+                                <input class="input" name="nome" type="text" placeholder="Nome.." value="<?php echo $nome; ?>">
                             </div>
-                            </div>
+                        </div>
 
-                            <div class="field">
-                            <label class="label">Username</label>
-                            <div class="control has-icons-left has-icons-right">
-                                <input class="input is-success" type="text" placeholder="Text input" value="bulma">
-                                <span class="icon is-small is-left">
-                                <i class="fas fa-user"></i>
-                                </span>
-                                <span class="icon is-small is-right">
-                                <i class="fas fa-check"></i>
-                                </span>
+                        <div class="field">
+                            <label class="label">E-mail:</label>
+                            <div class="control">
+                                <input class="input" name="email" type="email" placeholder="Email.." value="<?php echo $email; ?>">
                             </div>
-                            <p class="help is-success">This username is available</p>
-                            </div>
+                        </div>
 
-                            <div class="field">
-                            <label class="label">Email</label>
-                            <div class="control has-icons-left has-icons-right">
-                                <input class="input is-danger" type="email" placeholder="Email input" value="hello@">
-                                <span class="icon is-small is-left">
-                                <i class="fas fa-envelope"></i>
-                                </span>
-                                <span class="icon is-small is-right">
-                                <i class="fas fa-exclamation-triangle"></i>
-                                </span>
+                        <div class="field">
+                            <label class="label">Telefone:</label>
+                            <div class="control">
+                                <input class="input" type="tel" name="tel" placeholder="telefone" value="<?php echo $telefone; ?>">
                             </div>
-                            <p class="help is-danger">This email is invalid</p>
-                            </div>
+                        </div>
 
-                            <div class="field">
-                            <label class="label">Subject</label>
+                        <div class="field">
+                            <label class="label">Circulo Social</label>
                             <div class="control">
                                 <div class="select">
-                                <select>
-                                    <option>Select dropdown</option>
-                                    <option>With options</option>
+                                <select name="social">
+                                    <option <?php echo verificarSocial($social, 'Profissional'); ?>>Profissional</option>
+                                    <option <?php echo verificarSocial($social, 'Acadêmico'); ?>>Acadêmico</option>
+                                    <option <?php echo verificarSocial($social, 'Pessoal'); ?>>Pessoal</option>
+                                    <option <?php echo verificarSocial($social, 'Estudante'); ?>>Estudante</option>
+                                    <option <?php echo verificarSocial($social, 'Indefinido'); ?>>Indefinido</option>
                                 </select>
                                 </div>
                             </div>
-                            </div>
+                        </div>
 
-                            <div class="field">
-                            <label class="label">Message</label>
+                        <div class="field is-grouped">
                             <div class="control">
-                                <textarea class="textarea" placeholder="Textarea"></textarea>
-                            </div>
-                            </div>
-
-                            <div class="field">
-                            <div class="control">
-                                <label class="checkbox">
-                                <input type="checkbox">
-                                I agree to the <a href="#">terms and conditions</a>
-                                </label>
-                            </div>
-                            </div>
-
-                            <div class="field">
-                            <div class="control">
-                                <label class="radio">
-                                <input type="radio" name="question">
-                                Yes
-                                </label>
-                                <label class="radio">
-                                <input type="radio" name="question">
-                                No
-                                </label>
-                            </div>
-                            </div>
-
-                            <div class="field is-grouped">
-                            <div class="control">
-                                <button class="button is-link">Submit</button>
+                                <button type="submit" value="<?php echo $codigo; ?>" name="edit" class="button is-success">Salvar</button>
                             </div>
                             <div class="control">
-                                <button class="button is-link is-light">Cancel</button>
+                                <button type="submit" value="<?php echo $codigo; ?>" name="delete" class="button is-danger is-light">Excluir</button>
                             </div>
-                            </div>
-                        <!-- <div class="row">
-                            <form class="col s12">
-                            <div class="row">
-                                <div class="input-field col s6">
-                                <input value="<?php echo $nome; ?>" placeholder="Placeholder" id="first_name" type="text" class="validate">
-                                <label for="first_name">Nome</label>
-                                </div>
-                                <div class="input-field col s6">
-                                    <select>
-                                        <option value="1">Option 1</option>
-                                        <option value="2">Option 2</option>
-                                        <option value="3">Option 3</option>
-                                    </select>
-                                    <label>Circulo Social</label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="input-field col s12">
-                                <input value="<?php echo $email; ?>" id="disabled" type="email" class="validate">
-                                <label for="disabled">E-mail</label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="input-field col s12">
-                                <input value="<?php echo $telefone; ?>" id="password" type="text" class="validate">
-                                <label for="password">Telefone</label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="input-field col s12">
-                                <input value="<?php echo $data; ?>" id="email" type="text" class="validate">
-                                <label for="email">Data</label>
-                                </div>
-                            </div>
-                            </form>
-                            <div class="row">
-                                <div class="col s6">
-                                    <button name="edit" value="<?php echo $codigo; ?>" class="button is-fullwidth is-success is-outlined" type="submit"><i class=" fas fa-edit"></i></button>
-                                </div>
-                                <div class="col s6">
-                                    <button name="delete" value="<?php echo $codigo; ?>" class="button is-fullwidth is-danger is-outlined" type="submit"><i class=" fas fa-trash-alt"></i></button>
-                                </div>
-                            </div> -->
+                        </div>
                     </form>
+
+                    <hr></hr>
 
                 <?php
                         endwhile;
                     }
                 ?>
-                
-                </tbody>
-            </table>
         </div>
 
         <!-- JavaScript no fim da body para optimizar o carregamento - Jquery e Bootstrap -->
